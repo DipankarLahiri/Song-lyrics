@@ -36,7 +36,8 @@ For this challenge, pick a single artist from the datasets available in the dire
 
 ```{r}
 library(udpipe) # udpipe is a frequently used library for NLP in R
-
+library(dplyr)
+library(ggplot2)
 ```
 
 Add more code chunks as needed, and document as you go.
