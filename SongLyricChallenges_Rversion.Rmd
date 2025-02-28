@@ -1,0 +1,141 @@
+---
+title: "Song Lyric Challenges"
+output:   
+  html_document:
+    df_print: paged
+authors: Cliff Hammett
+updated: "12/11/2024"
+---
+
+# Intro
+
+For these challenges, we will analyse song lyrics from popular artists, including BTS, Taylor Swift, Beyonce and others, using Natural Language Processing and Sentiment Analysis. For challenge A and B, we will use the following dataset:
+
+[Song Lyrics dataset on Kaggle](https://www.kaggle.com/datasets/deepshah16/song-lyrics-dataset)
+
+This is located in the directory `data_challengeA+B`. The dataset has some duplication of songs as remixes, which will have the same or largely similar lyrics. You can attempt to deduplicate this data; otherwise, simply proceed to analyse the data but bear in mind this limitation. Also bear in mind that the lyric field sometimes also contains information about which artist is singing a lyric at any point.
+
+The above dataset is not suitable for sentiment analysis, because it is missing punctuation/line breaks needed to break it into smaller units. So for Challenge C, on sentiment analysis, we will look at the following dataset, which breaks the data into lines:
+
+[Taylor Swift lyrics dataset](https://www.kaggle.com/datasets/PromptCloudHQ/taylor-swift-song-lyrics-from-all-the-albums)
+
+This is located in the directory `data_challengeC`.
+
+# Challenge A: Analyse an artist’s lyrics
+
+**Knowledge required:** You will need to use a Natural Language Processing (NLP) library, such as udpipe. You will also need basic knowledge of data frames.
+
+**Skills gained:** Practice in NLP skills, focussing on Parts of Speech (POS) analysis.
+
+For this challenge, pick a single artist from the datasets available in the directory `data_challengeA+B`. Excluding stop words, perform a parts of speech analysis on lemmas to identify the following about this artists song lyrics:
+
+* What are the 10 most frequently used verbs?
+* What are the 10 most frequently used nouns?
+* What are the 10 most frequently used adjectives
+* What are the 10 most frequently used adverbs?
+
+```{r}
+library(udpipe) # udpipe is a frequently used library for NLP in R
+
+```
+
+Add more code chunks as needed, and document as you go.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+What does this suggest to you about the themes that are covered in this artists lyrics? And what are the limitations of this approach? Write some reflections.
+
+If, based on your reflections, you can make some improvements to your approach, then make them below:
+
+```{r}
+
+```
+
+
+
+# Challenge B: Compare three artists
+
+**Knowledge required:** You will need to use a Natural Language Processing (NLP) library, such as Spacy in Python, or udpipe in R. You will also need basic knowledge of data frames.
+
+**Skills practised:** Practice in NLP skills, focussing on Parts of Speech (POS) analysis, interpreting results.
+
+Perform a comparative analysis of at least two further artists, to identify the following:
+
+How often are your first artists top 10 verb, noun, adjective and adverb lemmas used by these two artists?
+
+What are the two additional artists top 10 verb, noun, adjective and adverb lemmas?
+
+You might want to write a function for some of the steps to make some of this easier.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+How similar or different are the two new artist from the first artist? What does this tell you about the original artist you analysed? What would you attribute this to? Does it challenge any of your original ideas?
+
+Can you change these measures, so it shows how frequently this word as opposed to other content words (e.g. as a percentage). Does this change your analysis?
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+# Challenge C: Sentiment analysis
+
+**Knowledge required:** You will need to use a sentiment analysis library, such as nltk/vader in Python, or syuzhet in R. You will also need basic knowledge of data frames.
+
+**Skills practised:** Use of and interpretation of sentiment analysis
+
+For this article we need to use the dataset in the directory `data_challengeC`
+
+Find a biographical article about Taylor Swift, and see how her career is split into different phases. Split the data into these phases (e.g. by year of release), and extract the lyrics from these to compare how sentiment has changed.
+
+First calculate positive or negative sentiment for lyrics in these phases (line by line) and then create averages for these phases. Is there a meaningful change in sentiment between the chosen phases? How would you account for that change?
+
+
+```{r}
+library(syuzhet) #syuzhet is a useful library for sentiment analysis
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+Then see if you can perform more fine grained analysis of the sentiment of Taylor Swift's lyrics. For instance, how does lyric sentiment change, on average, across songs on an album? Do the results seem meaningful to you?
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+What are the limitations of this approach?
+
