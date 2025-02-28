@@ -35,9 +35,45 @@ For this challenge, pick a single artist from the datasets available in the dire
 * What are the 10 most frequently used adverbs?
 
 ```{r}
-library(udpipe) # udpipe is a frequently used library for NLP in R
+# Loading libraries, adding dataset, manipulating dataset to make it more amenable for analysis.
+
+library(udpipe) 
 library(dplyr)
+library(tidyverse)
+library(tm)
 library(ggplot2)
+library(tidytext)
+
+my_df <- read_csv("data_challengeA+B/ColdPlay.csv")
+my_df <- my_df %>%
+  select(-1)
+my_df <- my_df %>%
+  mutate(Album = factor(Album, exclude = NULL))
+my_df <- my_df %>%
+  mutate(Date = as.Date(Date, format = "%Y-%m-%d"))
+my_df <- my_df %>%
+  arrange(Date)
+
+# Deduplicating songs
+
+my_df <- my_df %>%
+  mutate(Title_clean = tolower(Title) %>%
+                     str_replace_all("\\(.*\\)", "") %>% 
+                     str_replace_all("\\[.*\\]", "") %>% 
+                     str_replace_all("[^a-z0-9 ]", "") %>% 
+                     str_trim()) 
+
+my_df <- my_df %>%
+  distinct(Title_clean, .keep_all = TRUE)
+my_df <- my_df %>% select(-Title_clean)
+
+# Tokenising lyrics into words
+
+my_df_tokens <- my_df %>%
+  unnest_tokens(word, Lyric)
+my_df_tokens <- my_df_tokens %>%
+  anti_join(stop_words, by = "word")
+
 ```
 
 Add more code chunks as needed, and document as you go.
@@ -55,6 +91,10 @@ Add more code chunks as needed, and document as you go.
 ```
 
 What does this suggest to you about the themes that are covered in this artists lyrics? And what are the limitations of this approach? Write some reflections.
+
+Reflections
+- 28,420 stop words out of 42,266 total words in Coldplay's entire lyrics. That is a lot of stop words. Do all artists have so many stop words in their lyrics? Maybe artists can be sorted based on the number of stop words they use. Hypothesis: Leonard Cohen will rank highest for least stop words.
+- The selection of stop words is a little random. Words like 'down', 'around' are stop words, and 'gotta' and 'em' are not. Maybe calls for a customised stop word list for later analyses.
 
 If, based on your reflections, you can make some improvements to your approach, then make them below:
 
