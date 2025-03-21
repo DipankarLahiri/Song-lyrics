@@ -3,7 +3,7 @@ title: "Song Lyric Challenges"
 output:   
   html_document:
     df_print: paged
-authors: Cliff Hammett
+authors: Dipankar Lahiri
 updated: "12/11/2024"
 ---
 
@@ -35,7 +35,7 @@ For this challenge, pick a single artist from the datasets available in the dire
 * What are the 10 most frequently used adverbs?
 
 ```{r}
-# Loading libraries, adding dataset, manipulating dataset to make it more amenable for analysis.
+# Loading libraries, adding dataset, manipulating dataset to make it more amenable to analysis (making Coldplay's 60 albums levels, arranging songs by release date)
 
 library(udpipe) 
 library(dplyr)
@@ -43,64 +43,122 @@ library(tidyverse)
 library(tm)
 library(ggplot2)
 library(tidytext)
+library(stringr)
 
 my_df <- read_csv("data_challengeA+B/ColdPlay.csv")
+my_df <- my_df %>% select(-1)
 my_df <- my_df %>%
-  select(-1)
-my_df <- my_df %>%
-  mutate(Album = factor(Album, exclude = NULL))
-my_df <- my_df %>%
-  mutate(Date = as.Date(Date, format = "%Y-%m-%d"))
-my_df <- my_df %>%
+  mutate(Album = factor(Album, exclude = NULL),
+         Date = as.Date(Date, format = "%Y-%m-%d")) %>%
   arrange(Date)
 
-# Deduplicating songs
+# Deduplicating songs (to avoid over-representation of words from multiple versions of the same song)
 
 my_df <- my_df %>%
   mutate(Title_clean = tolower(Title) %>%
-                     str_replace_all("\\(.*\\)", "") %>% 
-                     str_replace_all("\\[.*\\]", "") %>% 
+                     str_replace_all("\\(.*\\)|\\[.*\\]", "") %>% 
                      str_replace_all("[^a-z0-9 ]", "") %>% 
-                     str_trim()) 
+                     str_trim()) %>%
+  distinct(Title_clean, .keep_all = TRUE) %>%
+  select(-Title_clean)
+
+## Dataframe my_df now has 245 songs as rows, down from 344 in the csv file, which means 99 songs in the dataset were additional versions of same songs. It has columns for Title, Album, Year and Date. These can be used for future analysis, visualisations of individual songs.
+
+# Tokenising lyrics into words, removing stopwords
 
 my_df <- my_df %>%
-  distinct(Title_clean, .keep_all = TRUE)
-my_df <- my_df %>% select(-Title_clean)
-
-# Tokenising lyrics into words
+  mutate(Lyric = str_replace_all(Lyric, "[^\\w\\s'’-]", " ") %>%
+                   stringi::stri_trans_general("NFC"))
 
 my_df_tokens <- my_df %>%
-  unnest_tokens(word, Lyric)
+  unnest_tokens(word, Lyric, token = "regex", pattern = "([^\\w'-]+)") %>%
+  filter(!str_detect(word, "^\\d+$")) 
+
+data("stop_words")
+stop_words_clean <- stop_words %>% filter(!str_detect(word, "'"))
+
 my_df_tokens <- my_df_tokens %>%
-  anti_join(stop_words, by = "word")
+  anti_join(stop_words_clean, by = "word") 
+
+
+## Created new dataframe my_df_tokens. Here, all words from the Lyric column of my_df are split up and given separate rows, preserving contractions, possessives, and hyphenated words. Then, eliminated all stop word and numbers. This first creates a dataset of 42,267 rows, before filtering, resulting in 15,813 rows for all meaningful words. 
+
+# Loading parts-of-speech model, tagging words in my_df_tokens with this model
+
+ud_model <- udpipe_download_model(language = "english")
+ud_model <- udpipe_load_model("/Users/dipankarlahiri/Desktop/College/Sem 2/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe")
+
+my_df_pos <- udpipe_annotate(ud_model, x = my_df_tokens$word) %>%
+  as.data.frame()
+
+my_df_pos <- my_df_pos %>%
+  mutate(token = case_when(
+    tolower(lag(token)) %in% c("do", "does", "did", "would", "should", "could", "ca") & tolower(token) == "n't" ~ paste0(lag(token), "n't"),
+    tolower(lag(token)) %in% c("i", "you", "he", "she", "it", "we", "they") & token %in% c("'m", "'ve", "'ll", "'d", "'re") ~ paste0(lag(token), token),  
+    tolower(lag(token)) %in% c("that", "who", "where", "how", "what", "there") & token == "'s" ~ paste0(lag(token), "'s"),
+    tolower(lag(token)) == "o" & token == "'er" ~ "o'er",
+    tolower(lag(token)) == "rock" & token == "'n" & lead(token) == "'roll" ~ "rock’n’roll",
+    tolower(lag(token)) == "let" & token == "'s" ~ "let's",
+    tolower(lag(token)) == "ma" & token == "'am" ~ "ma'am",
+    tolower(lag(token)) == "y" & token == "'all" ~ "y'all",
+    tolower(lag(token)) == "c" & token == "'mon" ~ "c'mon",
+    tolower(lag(token)) == "would" & tolower(token) == "nt" ~ "wouldn't",
+    tolower(lag(token)) == "could" & token == "'ve" ~ "could've",
+    tolower(lag(token)) == "should" & token == "'ve" ~ "should've",
+    lag(token) == "ca" & token == "n't" ~ "can't",  # Fix for "ca"
+    TRUE ~ token
+  )) %>%
+  filter(!token %in% c("n't", "'m", "'ve", "'ll", "'d", "'s", "'n", "'roll", "'am", "'you", "nt", "'all", "'mon", "'", "ca"))
+
+my_df_pos <- my_df_pos %>%
+  filter(!(lag(token) == token & row_number() > 1))
+
+## Created new dataframe my_df_pos by tagging words from my_df_tokens using a parts-of-speech model. This initially increased the row count to 18,000 due to the model splitting contractions, possessives, and compound words into separate tokens. To address this, merged key contractions and compound words back into single tokens while preserving their grammatical structure. After this adjustment, my_df_pos now has 16,127 rows.
 
 ```
 
 Add more code chunks as needed, and document as you go.
 
+# COLDPLAY'S TOP VERBS
+
 ```{r}
+
+pos_counts <- my_df_pos %>%
+  filter(upos %in% c("VERB", "NOUN", "ADJ", "ADV")) %>%
+  count(upos, lemma, sort = TRUE)
+
+top_verbs <- pos_counts %>% filter(upos == "VERB") %>% slice_head(n = 15)
+list(Verbs = top_verbs)
 
 ```
 
+# COLDPLAY'S TOP NOUNS
+
 ```{r}
+
+top_nouns <- pos_counts %>% filter(upos == "NOUN") %>% slice_head(n = 15)
+list (Nouns = top_nouns)
+  
 
 ```
 
+# COLDPLAY'S TOP ADJECTIVES
+
 ```{r}
+
+top_adjectives <- pos_counts %>% filter(upos == "ADJ") %>% slice_head(n = 15)
+list(Adjectives = top_adjectives)
+  
+```
+
+# COLDPLAY'S TOP ADVERBS
+```{r}
+top_adverbs <- pos_counts %>% filter(upos == "ADV") %>% slice_head(n = 15)
+list(Adverbs = top_adverbs)
 
 ```
 
 What does this suggest to you about the themes that are covered in this artists lyrics? And what are the limitations of this approach? Write some reflections.
-
-Reflections
-- 28,420 stop words out of 42,266 total words in Coldplay's entire lyrics. That is a lot of stop words. Do all artists have so many stop words in their lyrics? Maybe artists can be sorted based on the number of stop words they use. Hypothesis: Leonard Cohen will rank highest for least stop words.
-- The selection of stop words is a little random. Words like 'down', 'around' are stop words, and 'gotta' and 'em' are not. Maybe calls for a customised stop word list for later analyses.
-
-If, based on your reflections, you can make some improvements to your approach, then make them below:
-
-```{r}
-
-```
 
 
 
