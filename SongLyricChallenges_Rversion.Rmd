@@ -8,15 +8,17 @@ updated: "12/11/2024"
 ---
 
 # A word frequency analysis of the complete lyrics of Coldplay contrasted with Eminem and Drake throw up these broad findings:
-# 'Love' (218) is the most common word for Coldplay. 'World' (127), 'time' (112), 'day' (107), 'feel' (101) follow. Emotional reflection, temporality of experience and cosmic elements are the three broad themes that can be identified from Coldplay's most common words. 
-# Drake and Eminem's lyrics both show a tendency for more explicit language. Drake's favourite words are 'nigga', 'shit', 'girl', 'time', 'love', 'fuck', 'money', 'baby', 'life' and 'bitch'. Eminem's favourite words are 'shit', 'fuck', 'bitch', 'time', 'shady', 'ass', 'day', leave', 'feel' and 'girl'.
-# 'Real' is the most common adjective used by Drake. 'Bad' and 'white' are Eminem's most common adjectives. Coldplay's common adjectives, on the other hand, are 'wrong', 'true', 'cold', 'dark', 'beautiful', 'free'.
-# 'Feel', 'hear' and 'start' are three high-occuring verbs common between all three artists. Some unique common verbs for Coldplay are 'wait', 'stand', 'cry' and 'fly'. Use of the words 'leave', 'stay' and 'hit' is common for Drake and Eminem and not for Coldplay. 'Play' is a verb commonly used by Drake only, 'fuck' and 'kill' are verbs commonly used by Eminem only.
-# 'Damn' is the most common adverb used by Drake and Eminem. Coldplay's most common adverb is 'forever'.
+# 1. 'Love' (218) is the most common word for Coldplay. 'World' (127), 'time' (112), 'day' (107), 'feel' (101) follow. Emotional reflection, temporality of experience and cosmic elements are the three broad themes that can be identified from Coldplay's most common words. 
+# 2. Drake and Eminem's lyrics both show a tendency for more explicit language. Drake's favourite words are 'nigga', 'shit', 'girl', 'time', 'love', 'fuck', 'money', 'baby', 'life' and 'bitch'. Eminem's favourite words are 'shit', 'fuck', 'bitch', 'time', 'shady', 'ass', 'day', leave', 'feel' and 'girl'.
+# 3. 'Real' is the most common adjective used by Drake. 'Bad' and 'white' are Eminem's most common adjectives. Coldplay's common adjectives, on the other hand, are 'wrong', 'true', 'cold', 'dark', 'beautiful', 'free'.
+# 4. 'Feel', 'hear' and 'start' are three high-occuring verbs common between all three artists. Some unique common verbs for Coldplay are 'wait', 'stand', 'cry' and 'fly'. Use of the words 'leave', 'stay' and 'hit' is common for Drake and Eminem and not for Coldplay. 'Play' is a verb commonly used by Drake only, 'fuck' and 'kill' are verbs commonly used by Eminem only.
+# 5. 'Damn' is the most common adverb used by Drake and Eminem. Coldplay's most common adverb is 'forever'.
 
+-------------------------------------------------------------------------------------------------------------
 
-```{r}
-# Loading libraries, adding dataset, manipulating dataset to make it more amenable to analysis (making Coldplay's 60 albums levels, arranging songs by release date)
+```{r setup}
+
+knitr::opts_chunk$set(dev = 'png')
 
 library(udpipe) 
 library(dplyr)
@@ -33,12 +35,15 @@ library(gridExtra)
 
 my_df <- read_csv("data_challengeA+B/ColdPlay.csv")
 my_df <- my_df %>% select(-1)
+```
+
+# Loading libraries, cleaning dataset of Coldplay's lyrics to make it amenable to analysis (making Coldplay's 60 albums levels, arranging songs by release date). Deduplicating songs (to avoid over-representation of words from multiple versions of the same song). Tokenising lyrics into words, removing stopwords.
+
+```{r}
 my_df <- my_df %>%
   mutate(Album = factor(Album, exclude = NULL),
          Date = as.Date(Date, format = "%Y-%m-%d")) %>%
   arrange(Date)
-
-# Deduplicating songs (to avoid over-representation of words from multiple versions of the same song)
 
 my_df <- my_df %>%
   mutate(Title_clean = tolower(Title) %>%
@@ -47,11 +52,11 @@ my_df <- my_df %>%
                      str_trim()) %>%
   distinct(Title_clean, .keep_all = TRUE) %>%
   select(-Title_clean)
+```
 
-## Dataframe my_df now has 245 songs as rows, down from 344 in the csv file, which means 99 songs in the dataset were additional versions of same songs. It has columns for Title, Album, Year and Date. These can be used for future analysis, visualisations of individual songs.
+# Dataframe my_df now has 245 songs as rows, down from 344 in the csv file, which means 99 songs in the dataset were additional versions of same songs. It has columns for Title, Album, Year and Date. These can be used for future analysis, visualisations.
 
-# Tokenising lyrics into words, removing stopwords
-
+```{r}
 my_df <- my_df %>%
   mutate(Lyric = str_replace_all(Lyric, "[^\\w\\s'’-]", " ") %>%
                    stringi::stri_trans_general("NFC"))
@@ -65,12 +70,13 @@ stop_words_clean <- stop_words %>% filter(!str_detect(word, "'"))
 
 my_df_tokens <- my_df_tokens %>%
   anti_join(stop_words_clean, by = "word") 
+```
 
-
-## Created new dataframe my_df_tokens. Here, all words from the Lyric column of my_df are split up and given separate rows, preserving contractions, possessives, and hyphenated words. Then, eliminated all stop word and numbers. This first creates a dataset of 42,267 rows, before filtering, resulting in 15,813 rows for all meaningful words. 
+# Created new dataframe my_df_tokens. Here, all words from the Lyric column of my_df are split up and given separate rows, preserving contractions, possessives, and hyphenated words. Then, eliminated all stop word and numbers. This first creates a dataset of 42,267 rows, before filtering, resulting in 15,813 rows for all meaningful words. 
 
 # Loading parts-of-speech model, tagging words in my_df_tokens with this model
 
+```{r}
 ud_model <- udpipe_download_model(language = "english")
 ud_model <- udpipe_load_model("/Users/dipankarlahiri/Desktop/College/Sem 2/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe")
 
@@ -98,10 +104,9 @@ my_df_pos <- my_df_pos %>%
 
 my_df_pos <- my_df_pos %>%
   filter(!(lag(token) == token & row_number() > 1))
-
-## Created new dataframe my_df_pos by tagging words from my_df_tokens using a parts-of-speech model. This initially increased the row count to 18,000 due to the model splitting contractions, possessives, and compound words into separate tokens. To address this, merged key contractions and compound words back into single tokens while preserving their grammatical structure. After this adjustment, my_df_pos now has 16,127 rows.
-
 ```
+
+# Created new dataframe my_df_pos by tagging words from my_df_tokens using a parts-of-speech model. This initially increased the row count to 18,000 due to the model splitting contractions, possessives, and compound words into separate tokens. To address this, merged key contractions and compound words back into single tokens while preserving their grammatical structure. After this adjustment, my_df_pos now has 16,127 rows.
 
 # COLDPLAY'S TOP VERBS - feel, hear, wait, be, live, fly, talk, start, cry, stand
 
@@ -143,6 +148,8 @@ list(Adverbs = top_adverbs)
 # 'World', the second most common word overall, represents a theme of the cosmos. This includes natural elements like 'Light', 'Sky' and 'Sun'.
 
 # Limitations: 1> Counting word frequencies can often miss the context in which the word is used. 2> Words being misclassified (Eg: lose as adjective) suggest limitations of the POS tagging model and the appearance of words like 'Se' suggest limitations in the lemmatisation.
+
+-------------------------------------------------------------------------------------------------------------
 
 # COMPARING COLDPLAY'S LYRICS WITH DRAKE & EMINEM
 
@@ -342,32 +349,15 @@ ggplot(top_words_all, aes(x = fct_reorder(lemma, n), y = n, fill = Artist)) +
 plot_wordcloud <- function(artist_name, color_palette) {
   data_subset <- subset(top_words_all, Artist == artist_name)
   wordcloud(words = data_subset$lemma, freq = data_subset$n, 
-            scale = c(2, 0.4),  # Adjusted for better fitting
-            min.freq = 2,        # Allow lower-frequency words for more spacing
-            max.words = 120,     # More words = better distribution
+            scale = c(2, 0.4),
+            min.freq = 2,
+            max.words = 120,
             random.order = FALSE, 
             colors = brewer.pal(8, color_palette))
 }
 
-# Create a multi-panel plot for word clouds
-grid.newpage()
-pushViewport(viewport(layout = grid.layout(1, 3)))  
-
-# Draw word clouds in separate grid areas
-vp1 <- viewport(layout.pos.row = 1, layout.pos.col = 1)
-vp2 <- viewport(layout.pos.row = 1, layout.pos.col = 2)
-vp3 <- viewport(layout.pos.row = 1, layout.pos.col = 3)
-
-pushViewport(vp1)
 plot_wordcloud("Coldplay", "Blues")
-popViewport()
-
-pushViewport(vp2)
 plot_wordcloud("Drake", "Reds")
-popViewport()
-
-pushViewport(vp3)
 plot_wordcloud("Eminem", "Purples")
-popViewport()
 
 ```
