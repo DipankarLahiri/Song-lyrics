@@ -1625,73 +1625,112 @@ Drake</h1>
 </div>
 
 
-<div id="a-word-frequency-analysis-of-the-complete-lyrics-of-coldplay-contrasted-with-eminem-and-drake-throw-up-these-broad-findings" class="section level1">
-<h1>A word frequency analysis of the complete lyrics of Coldplay
-contrasted with Eminem and Drake throw up these broad findings:</h1>
-</div>
-<div id="love-218-is-the-most-common-word-for-coldplay.-world-127-time-112-day-107-feel-101-follow.-emotional-reflection-temporality-of-experience-and-cosmic-elements-are-the-three-broad-themes-that-can-be-identified-from-coldplays-most-common-words." class="section level1">
-<h1>1. ‘Love’ (218) is the most common word for Coldplay. ‘World’ (127),
-‘time’ (112), ‘day’ (107), ‘feel’ (101) follow. Emotional reflection,
-temporality of experience and cosmic elements are the three broad themes
-that can be identified from Coldplay’s most common words.</h1>
-</div>
-<div id="drake-and-eminems-lyrics-both-show-a-tendency-for-more-explicit-language.-drakes-favourite-words-are-nigga-shit-girl-time-love-fuck-money-baby-life-and-bitch.-eminems-favourite-words-are-shit-fuck-bitch-time-shady-ass-day-leave-feel-and-girl." class="section level1">
-<h1>2. Drake and Eminem’s lyrics both show a tendency for more explicit
-language. Drake’s favourite words are ‘nigga’, ‘shit’, ‘girl’, ‘time’,
-‘love’, ‘fuck’, ‘money’, ‘baby’, ‘life’ and ‘bitch’. Eminem’s favourite
-words are ‘shit’, ‘fuck’, ‘bitch’, ‘time’, ‘shady’, ‘ass’, ‘day’,
-leave’, ‘feel’ and ‘girl’.</h1>
-</div>
-<div id="real-is-the-most-common-adjective-used-by-drake.-bad-and-white-are-eminems-most-common-adjectives.-coldplays-common-adjectives-on-the-other-hand-are-wrong-true-cold-dark-beautiful-free." class="section level1">
-<h1>3. ‘Real’ is the most common adjective used by Drake. ‘Bad’ and
-‘white’ are Eminem’s most common adjectives. Coldplay’s common
-adjectives, on the other hand, are ‘wrong’, ‘true’, ‘cold’, ‘dark’,
-‘beautiful’, ‘free’.</h1>
-</div>
-<div id="feel-hear-and-start-are-three-high-occuring-verbs-common-between-all-three-artists.-some-unique-common-verbs-for-coldplay-are-wait-stand-cry-and-fly.-use-of-the-words-leave-stay-and-hit-is-common-for-drake-and-eminem-and-not-for-coldplay.-play-is-a-verb-commonly-used-by-drake-only-fuck-and-kill-are-verbs-commonly-used-by-eminem-only." class="section level1">
-<h1>4. ‘Feel’, ‘hear’ and ‘start’ are three high-occuring verbs common
-between all three artists. Some unique common verbs for Coldplay are
-‘wait’, ‘stand’, ‘cry’ and ‘fly’. Use of the words ‘leave’, ‘stay’ and
-‘hit’ is common for Drake and Eminem and not for Coldplay. ‘Play’ is a
-verb commonly used by Drake only, ‘fuck’ and ‘kill’ are verbs commonly
-used by Eminem only.</h1>
-</div>
-<div id="damn-is-the-most-common-adverb-used-by-drake-and-eminem.-coldplays-most-common-adverb-is-forever." class="section level1">
-<h1>5. ‘Damn’ is the most common adverb used by Drake and Eminem.
-Coldplay’s most common adverb is ‘forever’.</h1>
+<p>This is a word frequency analysis using parts-of-speech tagging of
+the entire lyrics of three popular music artists - Coldplay, Eminem and
+Drake. The differences in the lyrics highlight the contrasting
+approaches to songwriting in alternative rock and rap/hip-hop.</p>
+<div id="highlights-of-findings" class="section level2">
+<h2>Highlights of Findings</h2>
+<p><strong>1. Favourite Words and Themes</strong></p>
+<p>Coldplay’s most common words are about emotions and abstract themes
+like ‘love’, ‘world’, ‘time’, ‘life’. Their verbs (‘feel’, ‘hear’,
+‘wait’, ‘live’, ‘cry’) suggest introspection and emotional labour.
+Reflections on emotions, the temporality of experience and cosmic
+elements are some broad themes that can be identified from Coldplay’s
+most common words.</p>
+<p>Drake and Eminem lean heavily on slang and explicit language. Their
+top words include nigga, shit, bitch, fuck, money, and baby — terms tied
+to rap’s linguistic identity. Drake’s favourite words are ‘nigga’,
+‘shit’, ‘girl’, ‘time’, ‘love’, ‘fuck’, ‘money’, ‘baby’, ‘life’ and
+‘bitch’. Eminem’s favourite words are ‘shit’, ‘fuck’, ‘bitch’, ‘time’,
+‘shady’, ‘ass’, ‘day’, leave’, ‘feel’ and ‘girl’.</p>
+<p><strong>2. Adjective Use</strong></p>
+<p>Adjective use is very distinct for all three artists. ‘Wrong’ is the
+most common adjective.</p>
+<p>Coldplay has a completely distinct set of adjectives from the other
+two, ‘close’ being the most popular word. ‘True’, ‘cold’, ‘dark’,
+‘beautiful’, ‘free’ are some other popular descriptions.</p>
+<p>‘Real’, ‘bad’ and ‘crazy’ are some common top adjectives between
+Drake and Eminem, though ‘real’ occurs many more times in Drake’s lyrics
+and ‘bad’ occurs many more times in Eminem’s.</p>
+<p>‘Hard’ is a top adjective for Drake but not Eminem. ‘White’ is a top
+adjective for Eminem but not Drake.</p>
+<p><strong>3. Verb Use</strong></p>
+<p>Top verbs are more common across all artists. ‘Feel’, ‘hear’ and
+‘start’ are three high-occuring verbs common between all three
+artists.</p>
+<p>Some unique common verbs for Coldplay are ‘wait’, ‘stand’, ‘cry’ and
+‘fly’. Use of the words ‘leave’, ‘stay’ and ‘hit’ is common for Drake
+and Eminem and not for Coldplay.</p>
+<p>‘Play’ is a verb commonly used by Drake only, ‘fuck’ and ‘kill’ are
+verbs commonly used by Eminem only.</p>
+<p><strong>4. Adverb Use</strong></p>
+<p>Coldplay’s most common adverb is ‘forever’. ‘Damn’ is the most common
+adverb used by Drake and Eminem.</p>
 <hr />
 <pre class="r"><code>knitr::opts_chunk$set(dev = &#39;png&#39;)
 
 library(udpipe) 
-library(dplyr)
-library(tidyverse)
-library(tm)
-library(ggplot2)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ─────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+## ✔ forcats   1.0.0     ✔ readr     2.1.5
+## ✔ ggplot2   3.5.1     ✔ stringr   1.5.1
+## ✔ lubridate 1.9.4     ✔ tibble    3.2.1
+## ✔ purrr     1.0.2     ✔ tidyr     1.3.1</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(tm)</code></pre>
+<pre><code>## Loading required package: NLP
+## 
+## Attaching package: &#39;NLP&#39;
+## 
+## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     annotate</code></pre>
+<pre class="r"><code>library(ggplot2)
 library(tidytext)
 library(stringr)
 library(forcats)
-library(wordcloud)
-library(RColorBrewer)
+library(wordcloud)</code></pre>
+<pre><code>## Loading required package: RColorBrewer</code></pre>
+<pre class="r"><code>library(RColorBrewer)
 library(grid)
-library(gridExtra)
-
-my_df &lt;- read_csv(&quot;data_challengeA+B/ColdPlay.csv&quot;)</code></pre>
+library(gridExtra)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gridExtra&#39;
+## 
+## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
+<pre class="r"><code>my_df &lt;- read_csv(&quot;data_challengeA+B/ColdPlay.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 344 Columns: 7
 ## ── Column specification
-## ────────────────────────────────────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## ─────────────────────────────────────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
 ## (5): Artist, Title, Album, Date, Lyric dbl (2): ...1, Year
 ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ Specify the column types or set
 ## `show_col_types = FALSE` to quiet this message.
 ## • `` -&gt; `...1`</code></pre>
 <pre class="r"><code>my_df &lt;- my_df %&gt;% select(-1)</code></pre>
 </div>
-<div id="loading-libraries-cleaning-dataset-of-coldplays-lyrics-to-make-it-amenable-to-analysis-making-coldplays-60-albums-levels-arranging-songs-by-release-date.-deduplicating-songs-to-avoid-over-representation-of-words-from-multiple-versions-of-the-same-song.-tokenising-lyrics-into-words-removing-stopwords." class="section level1">
-<h1>Loading libraries, cleaning dataset of Coldplay’s lyrics to make it
+<div id="data-cleaning-preparation" class="section level2">
+<h2>Data Cleaning, Preparation</h2>
+<p>Loading libraries, cleaning dataset of Coldplay’s lyrics to make it
 amenable to analysis (making Coldplay’s 60 albums levels, arranging
 songs by release date). Deduplicating songs (to avoid
 over-representation of words from multiple versions of the same song).
-Tokenising lyrics into words, removing stopwords.</h1>
+Tokenising lyrics into words, removing stopwords.</p>
 <pre class="r"><code>my_df &lt;- my_df %&gt;%
   mutate(Album = factor(Album, exclude = NULL),
          Date = as.Date(Date, format = &quot;%Y-%m-%d&quot;)) %&gt;%
@@ -1704,12 +1743,10 @@ my_df &lt;- my_df %&gt;%
                      str_trim()) %&gt;%
   distinct(Title_clean, .keep_all = TRUE) %&gt;%
   select(-Title_clean)</code></pre>
-</div>
-<div id="dataframe-my_df-now-has-245-songs-as-rows-down-from-344-in-the-csv-file-which-means-99-songs-in-the-dataset-were-additional-versions-of-same-songs.-it-has-columns-for-title-album-year-and-date.-these-can-be-used-for-future-analysis-visualisations." class="section level1">
-<h1>Dataframe my_df now has 245 songs as rows, down from 344 in the csv
+<p>Dataframe my_df now has 245 songs as rows, down from 344 in the csv
 file, which means 99 songs in the dataset were additional versions of
 same songs. It has columns for Title, Album, Year and Date. These can be
-used for future analysis, visualisations.</h1>
+used for future analysis, visualisations.</p>
 <pre class="r"><code>my_df &lt;- my_df %&gt;%
   mutate(Lyric = str_replace_all(Lyric, &quot;[^\\w\\s&#39;’-]&quot;, &quot; &quot;) %&gt;%
                    stringi::stri_trans_general(&quot;NFC&quot;))
@@ -1723,25 +1760,20 @@ stop_words_clean &lt;- stop_words %&gt;% filter(!str_detect(word, &quot;&#39;&qu
 
 my_df_tokens &lt;- my_df_tokens %&gt;%
   anti_join(stop_words_clean, by = &quot;word&quot;) </code></pre>
-</div>
-<div id="created-new-dataframe-my_df_tokens.-here-all-words-from-the-lyric-column-of-my_df-are-split-up-and-given-separate-rows-preserving-contractions-possessives-and-hyphenated-words.-then-eliminated-all-stop-word-and-numbers.-this-first-creates-a-dataset-of-42267-rows-before-filtering-resulting-in-15813-rows-for-all-meaningful-words." class="section level1">
-<h1>Created new dataframe my_df_tokens. Here, all words from the Lyric
+<p>Created new dataframe my_df_tokens. Here, all words from the Lyric
 column of my_df are split up and given separate rows, preserving
 contractions, possessives, and hyphenated words. Then, eliminated all
 stop word and numbers. This first creates a dataset of 42,267 rows,
-before filtering, resulting in 15,813 rows for all meaningful
-words.</h1>
-</div>
-<div id="loading-parts-of-speech-model-tagging-words-in-my_df_tokens-with-this-model" class="section level1">
-<h1>Loading parts-of-speech model, tagging words in my_df_tokens with
-this model</h1>
+before filtering, resulting in 15,813 rows for all meaningful words.</p>
+<p>Loading parts-of-speech model, tagging words in my_df_tokens with
+this model</p>
 <pre class="r"><code>ud_model &lt;- udpipe_download_model(language = &quot;english&quot;)</code></pre>
-<pre><code>## Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /Users/dipankarlahiri/Desktop/College/Sem 2/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe</code></pre>
+<pre><code>## Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /Users/dipankarlahiri/Desktop/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe</code></pre>
 <pre><code>##  - This model has been trained on version 2.5 of data from https://universaldependencies.org</code></pre>
 <pre><code>##  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</code></pre>
 <pre><code>##  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</code></pre>
 <pre><code>##  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette(&#39;udpipe-train&#39;, package = &#39;udpipe&#39;)</code></pre>
-<pre><code>## Downloading finished, model stored at &#39;/Users/dipankarlahiri/Desktop/College/Sem 2/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe&#39;</code></pre>
+<pre><code>## Downloading finished, model stored at &#39;/Users/dipankarlahiri/Desktop/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe&#39;</code></pre>
 <pre class="r"><code>ud_model &lt;- udpipe_load_model(&quot;/Users/dipankarlahiri/Desktop/College/Sem 2/Data Analysis and Collection/R/Projects/Training/Song lyrics/SongLyricChallenges/english-ewt-ud-2.5-191206.udpipe&quot;)
 
 my_df_pos &lt;- udpipe_annotate(ud_model, x = my_df_tokens$word) %&gt;%
@@ -1768,19 +1800,18 @@ my_df_pos &lt;- my_df_pos %&gt;%
 
 my_df_pos &lt;- my_df_pos %&gt;%
   filter(!(lag(token) == token &amp; row_number() &gt; 1))</code></pre>
-</div>
-<div id="created-new-dataframe-my_df_pos-by-tagging-words-from-my_df_tokens-using-a-parts-of-speech-model.-this-initially-increased-the-row-count-to-18000-due-to-the-model-splitting-contractions-possessives-and-compound-words-into-separate-tokens.-to-address-this-merged-key-contractions-and-compound-words-back-into-single-tokens-while-preserving-their-grammatical-structure.-after-this-adjustment-my_df_pos-now-has-16127-rows." class="section level1">
-<h1>Created new dataframe my_df_pos by tagging words from my_df_tokens
+<p>Created new dataframe my_df_pos by tagging words from my_df_tokens
 using a parts-of-speech model. This initially increased the row count to
 18,000 due to the model splitting contractions, possessives, and
 compound words into separate tokens. To address this, merged key
 contractions and compound words back into single tokens while preserving
 their grammatical structure. After this adjustment, my_df_pos now has
-16,127 rows.</h1>
+16,127 rows.</p>
 </div>
-<div id="coldplays-top-verbs---feel-hear-wait-be-live-fly-talk-start-cry-stand" class="section level1">
-<h1>COLDPLAY’S TOP VERBS - feel, hear, wait, be, live, fly, talk, start,
-cry, stand</h1>
+<div id="coldplays-top-words" class="section level2">
+<h2>Coldplay’s Top Words</h2>
+<p><strong>Verbs -</strong> feel, hear, wait, be, live, fly, talk,
+start, cry, stand</p>
 <pre class="r"><code>pos_counts &lt;- my_df_pos %&gt;%
   filter(upos %in% c(&quot;VERB&quot;, &quot;NOUN&quot;, &quot;ADJ&quot;, &quot;ADV&quot;)) %&gt;%
   count(upos, lemma, sort = TRUE)
@@ -1804,10 +1835,8 @@ list(Verbs = top_verbs)</code></pre>
 ## 13 VERB  find  36
 ## 14 VERB  stop  35
 ## 15 VERB  stay  33</code></pre>
-</div>
-<div id="coldplays-top-nouns---love-world-time-day-life-light-sky-head-heart-sun" class="section level1">
-<h1>COLDPLAY’S TOP NOUNS - love, world, time, day, life, light, sky,
-head, heart, sun</h1>
+<p><strong>Nouns -</strong> love, world, time, day, life, light, sky,
+head, heart, sun</p>
 <pre class="r"><code>top_nouns &lt;- pos_counts %&gt;% filter(upos == &quot;NOUN&quot;) %&gt;% slice_head(n = 15)
 list (Nouns = top_nouns)</code></pre>
 <pre><code>## $Nouns
@@ -1827,10 +1856,8 @@ list (Nouns = top_nouns)</code></pre>
 ## 13 NOUN   head  76
 ## 14 NOUN  heart  73
 ## 15 NOUN    sun  69</code></pre>
-</div>
-<div id="coldplays-top-adjectives---close-wrong-true-alright-careful-dark-cold-strong-beautiful-free" class="section level1">
-<h1>COLDPLAY’S TOP ADJECTIVES - close, wrong, true, alright, careful,
-dark, cold, strong, beautiful, free</h1>
+<p><strong>Adjectives -</strong> close, wrong, true, alright, careful,
+dark, cold, strong, beautiful, free</p>
 <pre class="r"><code>top_adjectives &lt;- pos_counts %&gt;% filter(upos == &quot;ADJ&quot;) %&gt;% slice_head(n = 15)
 list(Adjectives = top_adjectives)</code></pre>
 <pre><code>## $Adjectives
@@ -1850,10 +1877,8 @@ list(Adjectives = top_adjectives)</code></pre>
 ## 13  ADJ        re 17
 ## 14  ADJ     alive 16
 ## 15  ADJ   hardest 16</code></pre>
-</div>
-<div id="coldplays-top-adverbs---forever-inside-here-all-slowly-underneath-pretty-where" class="section level1">
-<h1>COLDPLAY’S TOP ADVERBS - forever, inside, here, all, slowly,
-underneath, pretty, where</h1>
+<p><strong>Adverbs -</strong> forever, inside, here, all, slowly,
+underneath, pretty, where</p>
 <pre class="r"><code>top_adverbs &lt;- pos_counts %&gt;% filter(upos == &quot;ADV&quot;) %&gt;% slice_head(n = 15)
 list(Adverbs = top_adverbs)</code></pre>
 <pre><code>## $Adverbs
@@ -1873,47 +1898,37 @@ list(Adverbs = top_adverbs)</code></pre>
 ## 13  ADV     pretty  6
 ## 14  ADV      where  6
 ## 15  ADV      alien  5</code></pre>
-</div>
-<div id="coldplays-top-words-overall---love-218-world-127-time-112-day-107-feel-101" class="section level1">
-<h1>COLDPLAY’S TOP WORDS OVERALL - love (218), world (127), time (112),
-day (107), feel (101)</h1>
-</div>
-<div id="reflections-top-3-themes" class="section level1">
-<h1>REFLECTIONS (Top 3 themes):</h1>
-</div>
-<div id="love-is-the-most-common-word.-feel-is-the-only-non-noun-word-to-occur-more-than-100-times.-life-and-heart-are-other-top-words-that-can-be-said-to-fall-under-a-broad-theme-of-emotional-reflection." class="section level1">
-<h1>‘Love’ is the most common word. ‘Feel’ is the only non-noun word to
-occur more than 100 times. ‘Life’ and ‘Heart’ are other top words that
-can be said to fall under a broad theme of emotional reflection.</h1>
-</div>
-<div id="time-and-day-two-of-the-other-top-5-words-overall-can-be-seen-to-represent-a-theme-of-temporality.-forever-the-most-used-adverb-wait-and-start-fall-under-this-theme." class="section level1">
-<h1>‘Time’ and ‘Day’, two of the other top 5 words overall, can be seen
-to represent a theme of temporality. ‘Forever’, the most used adverb,
-‘Wait’ and ‘Start’ fall under this theme.</h1>
-</div>
-<div id="world-the-second-most-common-word-overall-represents-a-theme-of-the-cosmos.-this-includes-natural-elements-like-light-sky-and-sun." class="section level1">
-<h1>‘World’, the second most common word overall, represents a theme of
-the cosmos. This includes natural elements like ‘Light’, ‘Sky’ and
-‘Sun’.</h1>
-</div>
-<div id="limitations-1-counting-word-frequencies-can-often-miss-the-context-in-which-the-word-is-used.-2-words-being-misclassified-eg-lose-as-adjective-suggest-limitations-of-the-pos-tagging-model-and-the-appearance-of-words-like-se-suggest-limitations-in-the-lemmatisation." class="section level1">
-<h1>Limitations: 1&gt; Counting word frequencies can often miss the
-context in which the word is used. 2&gt; Words being misclassified (Eg:
-lose as adjective) suggest limitations of the POS tagging model and the
-appearance of words like ‘Se’ suggest limitations in the
-lemmatisation.</h1>
+<p><strong>Top Overall Words -</strong> love (218), world (127), time
+(112), day (107), feel (101)</p>
+<div id="top-themes" class="section level3">
+<h3>Top Themes</h3>
+<ul>
+<li><p>‘Love’ is the most common word. ‘Feel’ is the only non-noun word
+to occur more than 100 times. ‘Life’ and ‘Heart’ are other top words
+that can be said to fall under a broad theme of emotional
+reflection.</p></li>
+<li><p>‘Time’ and ‘Day’, two of the other top 5 words overall, these can
+be seen to represent a theme of temporality. ‘Forever’, the most used
+adverb, ‘Wait’ and ‘Start’ fall under this theme.</p></li>
+<li><p>‘World’, the second most common word overall, represents a theme
+of the cosmos. This includes natural elements like ‘Light’, ‘Sky’ and
+‘Sun’.</p></li>
+</ul>
+<p><strong>Limitations</strong></p>
+<p>Counting word frequencies can often miss the context in which the
+word is used. Words being misclassified (Eg: lose as adjective) suggest
+limitations of the POS tagging model and the appearance of words like
+‘Se’ suggest limitations in the lemmatisation.</p>
 <hr />
 </div>
-<div id="comparing-coldplays-lyrics-with-drake-eminem" class="section level1">
-<h1>COMPARING COLDPLAY’S LYRICS WITH DRAKE &amp; EMINEM</h1>
 </div>
-<div id="drake" class="section level1">
-<h1>DRAKE</h1>
+<div id="drakes-top-words" class="section level2">
+<h2>Drake’s Top Words</h2>
 <pre class="r"><code>my_df_drake &lt;- read_csv(&quot;data_challengeA+B/Drake.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 466 Columns: 7
 ## ── Column specification
-## ────────────────────────────────────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## ─────────────────────────────────────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
 ## (5): Artist, Title, Album, Date, Lyric dbl (2): ...1, Year
 ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ Specify the column types or set
 ## `show_col_types = FALSE` to quiet this message.
@@ -2047,22 +2062,19 @@ list(Adverbs = top_adverbs_drake)</code></pre>
 ## 13  ADV probably  22
 ## 14  ADV    round  22
 ## 15  ADV    doubt  21</code></pre>
+<p><strong>Drake’s Top Words -</strong> Nigga, Shit, Girl, Time, Love,
+Fuck, Money, Baby, Life, Bitch (all nouns)</p>
+<p><strong>Drake’s Top Non-Noun Words -</strong> Real (ADJECTIVE - 268),
+Feel (VERB - 259), Start (VERB - 240), Leave (VERB - 233), Hear (Verb -
+200)</p>
 </div>
-<div id="drake-top-words-overall---nigga-shit-girl-time-love-fuck-money-baby-life-bitch-all-nouns" class="section level1">
-<h1>DRAKE TOP WORDS OVERALL - Nigga, Shit, Girl, Time, Love, Fuck,
-Money, Baby, Life, Bitch (all nouns)</h1>
-</div>
-<div id="drake-top-non-nouns---real-adj---268-feel-verb---259-start-verb---240-leave-verb---233-hear-verb---200" class="section level1">
-<h1>DRAKE TOP NON-NOUNS - Real (ADJ - 268), Feel (VERB - 259), Start
-(VERB - 240), Leave (VERB - 233), Hear (Verb - 200)</h1>
-</div>
-<div id="eminem" class="section level1">
-<h1>EMINEM</h1>
+<div id="eminem" class="section level2">
+<h2>Eminem</h2>
 <pre class="r"><code>my_df_eminem &lt;- read_csv(&quot;data_challengeA+B/Eminem.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 521 Columns: 7
 ## ── Column specification
-## ────────────────────────────────────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## ─────────────────────────────────────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
 ## (5): Artist, Title, Album, Date, Lyric dbl (2): ...1, Year
 ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ Specify the column types or set
 ## `show_col_types = FALSE` to quiet this message.
@@ -2196,21 +2208,8 @@ list(Adverbs = top_adverbs_eminem)</code></pre>
 ## 13  ADV           loud  35
 ## 14  ADV        finally  30
 ## 15  ADV       mentally  30</code></pre>
-</div>
-<div id="eminem-top-words-overall---shit-fuck-bitch-time-shady-ass-day-leave-verb-feel-verb-girl" class="section level1">
-<h1>EMINEM TOP WORDS OVERALL - Shit, Fuck, Bitch, Time, Shady, Ass, Day,
-Leave (Verb), Feel (Verb), Girl</h1>
-</div>
-<div id="coldplays-most-common-words-are-about-emotions-and-abstract-themes-like-love-world-time-life.-their-verbs-feel-hear-wait-live-cry-suggest-introspection.-drake-and-eminem-however-lean-heavily-on-slang-and-explicit-language.-their-top-words-include-nigga-shit-bitch-fuck-money-and-baby-terms-tied-to-raps-cultural-and-linguistic-identity.-among-adjectives-the-word-real-stands-out-in-drakes-lyrics.-verbs-are-more-common-across-all-artists---one-noticeable-exception-is-the-use-of-the-words-leave-and-stay-by-drake-and-eminem-and-not-coldplay." class="section level1">
-<h1>Coldplay’s most common words are about emotions and abstract themes
-like love, world, time, life. Their verbs (feel, hear, wait, live, cry)
-suggest introspection. Drake and Eminem, however, lean heavily on slang
-and explicit language. Their top words include nigga, shit, bitch, fuck,
-money, and baby — terms tied to rap’s cultural and linguistic identity.
-Among adjectives, the word ‘real’ stands out in Drake’s lyrics. Verbs
-are more common across all artists - one noticeable exception is the use
-of the words ‘leave’ and ‘stay’ by Drake and Eminem and not
-Coldplay.</h1>
+<p><strong>Eminem’s Top Words -</strong> Shit, Fuck, Bitch, Time, Shady,
+Ass, Day, Leave (Verb), Feel (Verb), Girl</p>
 <pre class="r"><code>set.seed(42)
 
 my_df_drake_pos_sample &lt;- my_df_drake_pos %&gt;% sample_n(16127)
