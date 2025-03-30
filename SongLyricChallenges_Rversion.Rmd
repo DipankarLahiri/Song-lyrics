@@ -7,12 +7,37 @@ authors: Dipankar Lahiri
 updated: "12/11/2024"
 ---
 
-# A word frequency analysis of the complete lyrics of Coldplay contrasted with Eminem and Drake throw up these broad findings:
-# 1. 'Love' (218) is the most common word for Coldplay. 'World' (127), 'time' (112), 'day' (107), 'feel' (101) follow. Emotional reflection, temporality of experience and cosmic elements are the three broad themes that can be identified from Coldplay's most common words. 
-# 2. Drake and Eminem's lyrics both show a tendency for more explicit language. Drake's favourite words are 'nigga', 'shit', 'girl', 'time', 'love', 'fuck', 'money', 'baby', 'life' and 'bitch'. Eminem's favourite words are 'shit', 'fuck', 'bitch', 'time', 'shady', 'ass', 'day', leave', 'feel' and 'girl'.
-# 3. 'Real' is the most common adjective used by Drake. 'Bad' and 'white' are Eminem's most common adjectives. Coldplay's common adjectives, on the other hand, are 'wrong', 'true', 'cold', 'dark', 'beautiful', 'free'.
-# 4. 'Feel', 'hear' and 'start' are three high-occuring verbs common between all three artists. Some unique common verbs for Coldplay are 'wait', 'stand', 'cry' and 'fly'. Use of the words 'leave', 'stay' and 'hit' is common for Drake and Eminem and not for Coldplay. 'Play' is a verb commonly used by Drake only, 'fuck' and 'kill' are verbs commonly used by Eminem only.
-# 5. 'Damn' is the most common adverb used by Drake and Eminem. Coldplay's most common adverb is 'forever'.
+This is a word frequency analysis using parts-of-speech tagging of the entire lyrics of three popular music artists - Coldplay, Eminem and Drake. The differences in the lyrics highlight the contrasting approaches to songwriting in alternative rock and rap/hip-hop.
+
+## Highlights of Findings
+
+**1. Favourite Words and Themes**
+
+Coldplay’s most common words are about emotions and abstract themes like 'love', 'world', 'time', 'life'. Their verbs ('feel', 'hear', 'wait', 'live', 'cry') suggest introspection and emotional labour. Reflections on emotions, the temporality of experience and cosmic elements are some broad themes that can be identified from Coldplay's most common words.
+
+Drake and Eminem lean heavily on slang and explicit language. Their top words include nigga, shit, bitch, fuck, money, and baby — terms tied to rap’s linguistic identity. Drake's favourite words are 'nigga', 'shit', 'girl', 'time', 'love', 'fuck', 'money', 'baby', 'life' and 'bitch'. Eminem's favourite words are 'shit', 'fuck', 'bitch', 'time', 'shady', 'ass', 'day', leave', 'feel' and 'girl'.
+
+**2. Adjective Use**
+
+Adjective use is very distinct for all three artists. 'Wrong' is the most common adjective.
+
+Coldplay has a completely distinct set of adjectives from the other two, 'close' being the most popular word. 'True', 'cold', 'dark', 'beautiful', 'free' are some other popular descriptions.
+
+'Real', 'bad' and 'crazy' are some common top adjectives between Drake and Eminem, though 'real' occurs many more times in Drake's lyrics and 'bad' occurs many more times in Eminem's. 
+
+'Hard' is a top adjective for Drake but not Eminem. 'White' is a top adjective for Eminem but not Drake.
+
+**3. Verb Use**
+
+Top verbs are more common across all artists. 'Feel', 'hear' and 'start' are three high-occuring verbs common between all three artists. 
+
+Some unique common verbs for Coldplay are 'wait', 'stand', 'cry' and 'fly'. Use of the words 'leave', 'stay' and 'hit' is common for Drake and Eminem and not for Coldplay. 
+
+'Play' is a verb commonly used by Drake only, 'fuck' and 'kill' are verbs commonly used by Eminem only. 
+
+**4. Adverb Use**
+
+Coldplay's most common adverb is 'forever'. 'Damn' is the most common adverb used by Drake and Eminem.
 
 -------------------------------------------------------------------------------------------------------------
 
@@ -37,7 +62,9 @@ my_df <- read_csv("data_challengeA+B/ColdPlay.csv")
 my_df <- my_df %>% select(-1)
 ```
 
-# Loading libraries, cleaning dataset of Coldplay's lyrics to make it amenable to analysis (making Coldplay's 60 albums levels, arranging songs by release date). Deduplicating songs (to avoid over-representation of words from multiple versions of the same song). Tokenising lyrics into words, removing stopwords.
+## Data Cleaning, Preparation
+
+Loading libraries, cleaning dataset of Coldplay's lyrics to make it amenable to analysis (making Coldplay's 60 albums levels, arranging songs by release date). Deduplicating songs (to avoid over-representation of words from multiple versions of the same song). Tokenising lyrics into words, removing stopwords.
 
 ```{r}
 my_df <- my_df %>%
@@ -54,7 +81,7 @@ my_df <- my_df %>%
   select(-Title_clean)
 ```
 
-# Dataframe my_df now has 245 songs as rows, down from 344 in the csv file, which means 99 songs in the dataset were additional versions of same songs. It has columns for Title, Album, Year and Date. These can be used for future analysis, visualisations.
+Dataframe my_df now has 245 songs as rows, down from 344 in the csv file, which means 99 songs in the dataset were additional versions of same songs. It has columns for Title, Album, Year and Date. These can be used for future analysis, visualisations.
 
 ```{r}
 my_df <- my_df %>%
@@ -72,9 +99,9 @@ my_df_tokens <- my_df_tokens %>%
   anti_join(stop_words_clean, by = "word") 
 ```
 
-# Created new dataframe my_df_tokens. Here, all words from the Lyric column of my_df are split up and given separate rows, preserving contractions, possessives, and hyphenated words. Then, eliminated all stop word and numbers. This first creates a dataset of 42,267 rows, before filtering, resulting in 15,813 rows for all meaningful words. 
+Created new dataframe my_df_tokens. Here, all words from the Lyric column of my_df are split up and given separate rows, preserving contractions, possessives, and hyphenated words. Then, eliminated all stop word and numbers. This first creates a dataset of 42,267 rows, before filtering, resulting in 15,813 rows for all meaningful words. 
 
-# Loading parts-of-speech model, tagging words in my_df_tokens with this model
+Loading parts-of-speech model, tagging words in my_df_tokens with this model
 
 ```{r}
 ud_model <- udpipe_download_model(language = "english")
@@ -106,9 +133,11 @@ my_df_pos <- my_df_pos %>%
   filter(!(lag(token) == token & row_number() > 1))
 ```
 
-# Created new dataframe my_df_pos by tagging words from my_df_tokens using a parts-of-speech model. This initially increased the row count to 18,000 due to the model splitting contractions, possessives, and compound words into separate tokens. To address this, merged key contractions and compound words back into single tokens while preserving their grammatical structure. After this adjustment, my_df_pos now has 16,127 rows.
+Created new dataframe my_df_pos by tagging words from my_df_tokens using a parts-of-speech model. This initially increased the row count to 18,000 due to the model splitting contractions, possessives, and compound words into separate tokens. To address this, merged key contractions and compound words back into single tokens while preserving their grammatical structure. After this adjustment, my_df_pos now has 16,127 rows.
 
-# COLDPLAY'S TOP VERBS - feel, hear, wait, be, live, fly, talk, start, cry, stand
+## Coldplay's Top Words 
+
+**Verbs -** feel, hear, wait, be, live, fly, talk, start, cry, stand
 
 ```{r}
 pos_counts <- my_df_pos %>%
@@ -119,41 +148,45 @@ top_verbs <- pos_counts %>% filter(upos == "VERB") %>% slice_head(n = 15)
 list(Verbs = top_verbs)
 ```
 
-# COLDPLAY'S TOP NOUNS - love, world, time, day, life, light, sky, head, heart, sun
+**Nouns -** love, world, time, day, life, light, sky, head, heart, sun
 
 ```{r}
 top_nouns <- pos_counts %>% filter(upos == "NOUN") %>% slice_head(n = 15)
 list (Nouns = top_nouns)
 ```
 
-# COLDPLAY'S TOP ADJECTIVES - close, wrong, true, alright, careful, dark, cold, strong, beautiful, free
+**Adjectives -** close, wrong, true, alright, careful, dark, cold, strong, beautiful, free
 
 ```{r}
 top_adjectives <- pos_counts %>% filter(upos == "ADJ") %>% slice_head(n = 15)
 list(Adjectives = top_adjectives)
 ```
 
-# COLDPLAY'S TOP ADVERBS - forever, inside, here, all, slowly, underneath, pretty, where
+**Adverbs -** forever, inside, here, all, slowly, underneath, pretty, where
 
 ```{r}
 top_adverbs <- pos_counts %>% filter(upos == "ADV") %>% slice_head(n = 15)
 list(Adverbs = top_adverbs)
 ```
 
-# COLDPLAY'S TOP WORDS OVERALL - love (218), world (127), time (112), day (107), feel (101)
+**Top Overall Words -** love (218), world (127), time (112), day (107), feel (101)
 
-# REFLECTIONS (Top 3 themes): 
-# 'Love' is the most common word. 'Feel' is the only non-noun word to occur more than 100 times. 'Life' and 'Heart' are other top words that can be said to fall under a broad theme of emotional reflection.
-# 'Time' and 'Day', two of the other top 5 words overall, can be seen to represent a theme of temporality. 'Forever', the most used adverb, 'Wait' and 'Start' fall under this theme.
-# 'World', the second most common word overall, represents a theme of the cosmos. This includes natural elements like 'Light', 'Sky' and 'Sun'.
+### Top Themes 
 
-# Limitations: 1> Counting word frequencies can often miss the context in which the word is used. 2> Words being misclassified (Eg: lose as adjective) suggest limitations of the POS tagging model and the appearance of words like 'Se' suggest limitations in the lemmatisation.
+- 'Love' is the most common word. 'Feel' is the only non-noun word to occur more than 100 times. 'Life' and 'Heart' are other top words that can be said to fall under a broad theme of emotional reflection.
+
+- 'Time' and 'Day', two of the other top 5 words overall, these can be seen to represent a theme of temporality. 'Forever', the most used adverb, 'Wait' and 'Start' fall under this theme.
+
+- 'World', the second most common word overall, represents a theme of the cosmos. This includes natural elements like 'Light', 'Sky' and 'Sun'.
+
+**Limitations** 
+
+Counting word frequencies can often miss the context in which the word is used. Words being misclassified (Eg: lose as adjective) suggest limitations of the POS tagging model and the appearance of words like 'Se' suggest limitations in the lemmatisation.
 
 -------------------------------------------------------------------------------------------------------------
 
-# COMPARING COLDPLAY'S LYRICS WITH DRAKE & EMINEM
+## Drake's Top Words
 
-# DRAKE
 ```{r}
 
 my_df_drake <- read_csv("data_challengeA+B/Drake.csv")
@@ -224,10 +257,11 @@ list(Adverbs = top_adverbs_drake)
 
 ```
 
-# DRAKE TOP WORDS OVERALL - Nigga, Shit, Girl, Time, Love, Fuck, Money, Baby, Life, Bitch (all nouns)
-# DRAKE TOP NON-NOUNS - Real (ADJ - 268), Feel (VERB - 259), Start (VERB - 240), Leave (VERB - 233), Hear (Verb - 200)
+**Drake's Top Words -** Nigga, Shit, Girl, Time, Love, Fuck, Money, Baby, Life, Bitch (all nouns)
 
-# EMINEM
+**Drake's Top Non-Noun Words -** Real (ADJECTIVE - 268), Feel (VERB - 259), Start (VERB - 240), Leave (VERB - 233), Hear (Verb - 200)
+
+## Eminem
 
 ```{r}
 
@@ -299,9 +333,7 @@ list(Adverbs = top_adverbs_eminem)
 
 ```
 
-# EMINEM TOP WORDS OVERALL - Shit, Fuck, Bitch, Time, Shady, Ass, Day, Leave (Verb), Feel (Verb), Girl
-
-# Coldplay’s most common words are about emotions and abstract themes like love, world, time, life. Their verbs (feel, hear, wait, live, cry) suggest introspection. Drake and Eminem, however, lean heavily on slang and explicit language. Their top words include nigga, shit, bitch, fuck, money, and baby — terms tied to rap’s cultural and linguistic identity. Among adjectives, the word 'real' stands out in Drake's lyrics. Verbs are more common across all artists - one noticeable exception is the use of the words 'leave' and 'stay' by Drake and Eminem and not Coldplay.
+**Eminem's Top Words -** Shit, Fuck, Bitch, Time, Shady, Ass, Day, Leave (Verb), Feel (Verb), Girl
 
 
 ```{r}
